@@ -1,0 +1,113 @@
+<!doctype html>
+	<head>
+		<title>Add to Pinboard</title>
+		<meta name="description" content="Bookmarklet to save link to pinboard from iPhone or iPad" />
+		<meta name="author" content="Christian Shum-Harden">
+
+		<script src="jquery.js"></script>
+		<style>
+			.hidden {
+				display:none;
+			}
+			.js {
+				width : 500px;
+				font-size:20px;
+				margin-bottom:100px;
+				word-wrap:break-word;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Pinboard bookmarklet tool for Mobile Safari</h1>
+		<article>
+			<h2>Install Bookmarklet (Option 1)</h2>
+			<p>Enter your <a href="http://pinboard.in/settings/password" title="Pinboard API token">Pinboard API token</a>:</p>
+			<form>
+				<input id="auth_token" type="text" placeholder="auth-token">
+				<a class="go">Go</a>
+			</form>
+			<div id="instructions" class="hidden">
+				<h2>Copy + paste the generated bookmarklet to Mobile Safari</h2>
+				<ol>
+					<li>
+						<p>Create a new Bookmark</p>
+						<img src=""/>
+					</li>
+					<li>
+						<p>Hit "Done".</p>
+					</li>
+					<li>
+						<p>Open Bookmarks view</p>
+					</li>
+					<li>
+						<p>Edit the "Add to Pinboard" bookmark</p>
+					</li>
+					<li>
+						<p>Copy + Paste the following Code into the URL field.</p>
+						<div id="generated"></div>
+					</li>
+				</ol>
+			</div>
+		</article>
+
+		<div class="hidden">
+			<code id="js" class="js">
+				javascript:
+					(function () {
+						var s = "https://github.com/potench/pinboard-bookmarklet", // URL of pinboard script
+							d=document,
+							t=d.title,
+							z=d.createElement('scr'+'ipt'),
+							b=d.body,
+							auth="YOUR/AUTH/GOES/HERE",
+							l=d.location,
+							url = s + "pinboard.js?auth_token=" + auth + "&url=" + l.href + "&title=" + t + "&root=" + encodeURI(s);
+
+						try{
+							d.title = '(Fetching) ' + t;
+							z.setAttribute('id','pinboard-hook');
+							z.setAttribute('src',url);
+							b.appendChild(z);
+						}catch(e){
+							alert('Please wait until the page has loaded.');
+						}
+
+					})();
+			</code>
+		</div>
+
+		<script>
+			// format the bookmarklet
+			$(function () {
+				var onSubmit = function (e) {
+						var p = $("#js"),
+							t = p.text(),
+							d = $("<div/>"),
+							a = $("#auth_token").val();
+						t = t.replace(/(\r\n|\n|\r|\t)/gm,"").replace("YOUR/AUTH/GOES/HERE", a);
+
+						if(!a) {
+							alert("Please enter your Pinboard API Token");
+							return;
+						}
+
+						d.attr('class', 'js');
+						d.text(encodeURI(t));
+
+						$("#generated").html(d);
+						$("#instructions").removeClass("hidden");
+
+						return false;
+					},
+					form = $("form"),
+					submit = $("a.go");
+
+				form.on("submit", onSubmit);
+				submit.on("click", function () {
+					form.submit();
+				});
+
+			});
+		</script>
+	</body>
+</html>

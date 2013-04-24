@@ -1,0 +1,34 @@
+<!--//
+	This <form> is a stub.  I minify this and paste it into pinboard.js line 4.
+//-->
+
+<!doctype html>
+<head>
+	<head>
+		<title>Form</title>
+		<link rel="stylesheet" href="bookmarklet.css" />
+	</head>
+	<body>
+		<form id="pinboard-bookmarklet" method="POST">
+			<a id="pinboard-close">X</a>
+			<fieldset>
+				<input type="hidden" id="pb_auth_token" name="pb_auth_token" value=""/>
+				<ul>
+					<li>
+						<input name="tags" id="pb_tags" placeholder="Tags" type="text" autocomplete="off" autocorrect="off" autocapitalize="off"  value="">
+					</li>
+					<li>
+						<input name="pb_title" id="pb_title" type="text" placeholder="Title" autocomplete="off" autocapitalize="off" value="">
+					</li>
+					<li>
+						<textarea name="pb_description" id="pb_description" placeholder="Description" autocomplete="off" autocapitalize="off" rows="2"></textarea>
+					</li>
+					<li>
+						<input type="text" id="pb_url" name="pb_url" placeholder="URL" autocorrect="off" value="">
+					</li>
+					<li><input type="submit" value="&#10003;"/></li>
+				</ul>
+			</fieldset>
+		</form>
+	</body>
+</html>
